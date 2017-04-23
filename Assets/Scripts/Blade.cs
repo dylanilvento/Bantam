@@ -8,6 +8,8 @@ public class Blade : MonoBehaviour {
 	int modifier;
 	Rigidbody2D rb;
 	float x, y, z;
+
+	public GameObject explosion;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
@@ -65,6 +67,22 @@ public class Blade : MonoBehaviour {
 			// print("works");
 			Destroy(gameObject);
 		}
+	}
+
+	void OnTriggerEnter2D (Collider2D other) {
+		if (other.gameObject.name.Contains("Bullet")) {
+			Destroy(gameObject);
+		}
+
+		if (other.gameObject.name.Contains("Player")) {
+			Destroy(gameObject);
+			CreateExplosion();
+		}
+	}
+
+	void CreateExplosion () {
+		GameObject spawnedExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
+		spawnedExplosion.GetComponent<SpriteRenderer>().sortingOrder = 3;
 	}
 
 }

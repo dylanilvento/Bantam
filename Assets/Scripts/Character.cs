@@ -6,19 +6,25 @@ using UnityEngine.UI;
 public class Character : MonoBehaviour {
 	Rigidbody2D rb;
 	BoxCollider2D boxCollider;
+	CircleCollider2D circleCollider;
+
+
+	SpriteRenderer sr;
 
 	Animator anim;
-	public GameObject bullet;
+
+	GameManager gm;
+	public GameObject bullet, explosion;
 	public float xAxis;
 
 	[Range(0f, 1f)]
 	public float movementSpeed;
 	[Range(0f, 50f)]
 	public float jumpDistance;
-	public Image[] uiBullets = new Image[4], reloadBarFill = new Image[5];
-	public Sprite bulletFill, bulletOutline;
-	int ammo = 3;
-	bool outOfAmmo = false, grounded = true, ducking = false, canShoot = true;
+	public Image[] uiBullets = new Image[4], reloadBarFill = new Image[5], uiHealth = new Image[4];
+	public Sprite bulletFill, bulletOutline, heartFill, heartOutline;
+	int ammo = 3, health = 3;
+	bool outOfAmmo = false, grounded = true, ducking = false, canShoot = true, invincible = false;
 
 
 	// Use this for initialization
@@ -26,6 +32,9 @@ public class Character : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();	
 		anim = GetComponent<Animator>();
 		boxCollider = GetComponent<BoxCollider2D>();
+		circleCollider = GetComponent<CircleCollider2D>();
+		sr = GetComponent<SpriteRenderer>();
+		gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
 		Transparency.SetTransparent(reloadBarFill);
 	}
 	
@@ -95,7 +104,7 @@ public class Character : MonoBehaviour {
 
 	IEnumerator PauseShooting () {
 		canShoot = false;
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.25f);
 		canShoot = true;
 	}
 
@@ -125,8 +134,57 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {
-		if (other.gameObject.name.Contains("Floor") || other.gameObject.name.Contains("Enemy Base")) {
+		if (other.gameObject.name.Contains("Floor") || other.gameObject.name.Contains("Enemy Base") || other.gameObject.name.Contains("Platform")) {
 			grounded = true;
+		}	
+	}
+
+	void OnTriggerEnter2D (Collider2D other) {
+		if (other.gameObject.name.Contains("Blade") && !invincible) {
+			print("Works");
+			
+			if (health >= 0) {
+				uiHealth[health].GetComponent<Image>().sprite = heartOutline;
+				health--;
+			
+			}
+
+			if (health < 0) {
+				Die();
+			}
+
+			else {
+				TakeDamage();
+			}
 		}
 	}
+
+	void TakeDamage () {
+		rb.velocity = new Vector2(transform.localScale.x * -1f, 4f);
+		StartCoroutine("FlashInvincibility");
+	
+	}
+
+	void Die () {
+		circleCollider.enabled = false;
+		boxCollider.enabled = false;
+		rb.velocity = new Vector2(transform.localScale.x * -1f, 4f);
+		// StartCoroutine("FlashInvincibility");
+		gm.CallGameOver();
+	
+	}
+
+	IEnumerator FlashInvincibility () {
+		int ii = 0;
+		invincible = true;
+		while (ii < 5) {
+			sr.color = Color.red;
+			yield return new WaitForSeconds(0.25f);
+			sr.color = Color.white;
+			yield return new WaitForSeconds(0.25f);
+			ii++;
+		}
+		invincible = false;
+	}
+	
 }

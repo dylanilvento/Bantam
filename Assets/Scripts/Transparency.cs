@@ -43,6 +43,11 @@ public class Transparency : MonoBehaviour {
 				SpriteRenderer currGO = goArray[i].GetComponent<SpriteRenderer>();
 				currGO.color = new Color (currGO.color.r, currGO.color.g, currGO.color.b, opacity);
 			}
+
+			else if (goArray[i].GetComponent<TextMesh>() != null) {
+				TextMesh currGO = goArray[i].GetComponent<TextMesh>();
+				currGO.color = new Color(currGO.color.r, currGO.color.g, currGO.color.b, 0);
+			}
 		}
 	}
 
@@ -91,7 +96,13 @@ public class Transparency : MonoBehaviour {
 				Text currGO = goArray[i].GetComponent<Text>();
 				currGO.color = new Color (currGO.color.r, currGO.color.g, currGO.color.b, 0);
 			}
+
+			else if (goArray[i].GetComponent<TextMesh>() != null) {
+				TextMesh currGO = goArray[i].GetComponent<TextMesh>();
+				currGO.color = new Color(currGO.color.r, currGO.color.g, currGO.color.b, 0);
+			}
 		}
+
 	}
 
 	public static void SetTransparent (Image[] imageArray) {
@@ -112,6 +123,19 @@ public class Transparency : MonoBehaviour {
 				currGO.color = new Color (currGO.color.r, currGO.color.g, currGO.color.b, 0);
 			}
 		}
+	}
+
+	public static void SetTransparent (GameObject go) {
+		if (go.GetComponent<Image>() != null) {
+			Image currGO = go.GetComponent<Image>();
+			currGO.color = new Color (currGO.color.r, currGO.color.g, currGO.color.b, 0);
+		}
+
+		else if (go.GetComponent<Text>() != null) {
+			Text currGO = go.GetComponent<Text>();
+			currGO.color = new Color (currGO.color.r, currGO.color.g, currGO.color.b, 0);
+		}
+
 	}
 
 	public static void UpFade (GameObject[] goArray) {
@@ -138,6 +162,37 @@ public class Transparency : MonoBehaviour {
 			instance.StartCoroutine("FadeUp", goArray);
 		}
 		
+	}
+
+	public static void UpFade (GameObject go) {
+		//instance = this;
+		//SetInstance();
+		if (instance == null) {
+			Debug.Log("Ain't working");
+		}
+
+		else {
+			print("calling it");
+			instance.StartCoroutine("FadeUp", go);
+		}
+		
+	}
+
+	IEnumerator FadeUp (GameObject go) {
+		while (go.GetComponent<Image>().color.a < 1.0f || go.GetComponent<Text>().color.a < 1f) {
+			// for (int i = 0; i < goArray.Length; i++) {
+				if (go.GetComponent<Image>() != null) {
+					Image currGO = go.GetComponent<Image>();
+					currGO.color = new Color (currGO.color.r, currGO.color.g, currGO.color.b, currGO.color.a + 0.1f);
+				}
+	
+				else if (go.GetComponent<Text>() != null) {
+					Text currGO = go.GetComponent<Text>();
+					currGO.color = new Color (currGO.color.r, currGO.color.g, currGO.color.b, currGO.color.a + 0.1f);
+				}
+			// }
+			yield return new WaitForSeconds(0.05f);
+		}
 	}
 
 	IEnumerator FadeUp (GameObject[] goArray) {
