@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		health = Random.Range(5, 10);
+		// health = 1;
 		gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
 		gm.EnemyCheckIn();
 	}
@@ -31,19 +32,6 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 	}
-
-	// void OnCollisionEnter2D (Collision2D other) {
-	// 	// print(other.gameObject.name);
-	// 	if (other.gameObject.name.Contains("Bul")) {
-	// 		// print("works");
-	// 		health--;
-	// 		if (health <= 0) {
-	// 			print("exploding");
-	// 			Explode();
-	// 		}
-			
-	// 	}
-	// }
 
 	void Explode () {
 		print("Explode!");

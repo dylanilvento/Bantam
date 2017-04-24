@@ -1,13 +1,9 @@
 fileFormatVersion: 2
-guid: b581be9d92fe042c4a8da070ec4a89f6
-timeCreated: 1492880453
+guid: 535c73c1daca3446da7f3c41ff9529a2
+timeCreated: 1492980167
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Ship Puff_0
-    21300002: Ship Puff_1
-    21300004: Ship Puff_2
-    21300006: Ship Puff_3
+  fileIDToRecycleName: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -38,7 +34,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,59 +68,7 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Ship Puff_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ship Puff_1
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 0
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ship Puff_2
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 0
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ship Puff_3
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 0
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 

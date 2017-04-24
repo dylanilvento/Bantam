@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-
+	public int fortNum;
 	int enemyCnt = 0;
 	public GameObject uiCnt, uiCntBG, winScreen;
 	public GameObject[] gameOverScreen;
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
 		uiCntBG.GetComponent<Text>().text = enemyCnt + "";
 
 		if (enemyCnt <= 0) {
-			Transparency.SetOpacity(winScreen, 1f);
+			StartCoroutine("CallWinScreen");
 		}
 	}
 
@@ -43,6 +44,17 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator GameOver () {
 		yield return new WaitForSeconds(2f);
-		Transparency.SetOpacity(gameOverScreen, 1f); 
+		Transparency.SetOpacity(gameOverScreen, 1f);
+		GameStats.StartGameOver();
+		yield return new WaitForSeconds(2f);
+		SceneManager.LoadScene(5);
+	}
+
+	IEnumerator CallWinScreen () {
+		Transparency.SetOpacity(winScreen, 1f);
+		GameStats.ConquerFort(fortNum);
+		yield return new WaitForSeconds(3f);
+		print("reload the overworld");
+		SceneManager.LoadScene(0);
 	}
 }

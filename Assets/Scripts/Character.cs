@@ -24,7 +24,7 @@ public class Character : MonoBehaviour {
 	public Image[] uiBullets = new Image[4], reloadBarFill = new Image[5], uiHealth = new Image[4];
 	public Sprite bulletFill, bulletOutline, heartFill, heartOutline;
 	int ammo = 3, health = 3;
-	bool outOfAmmo = false, grounded = true, ducking = false, canShoot = true, invincible = false;
+	bool outOfAmmo = false, grounded = true, ducking = false, canShoot = true, invincible = false, dead = false;
 
 
 	// Use this for initialization
@@ -40,43 +40,46 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		xAxis = Input.GetAxis("Horizontal");
-
-		if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) {
-			rb.velocity = new Vector2(rb.velocity.x * 2.5f, jumpDistance);
-			grounded = false;
-		}
-
-		if (xAxis > 0f && grounded) {
-			rb.velocity = new Vector2 (movementSpeed, rb.velocity.y);
-			if (transform.localScale.x < 0) transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
 			
+		if (!dead) {
+			xAxis = Input.GetAxis("Horizontal");
+
+			if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) {
+				rb.velocity = new Vector2(rb.velocity.x * 2.5f, jumpDistance);
+				grounded = false;
+			}
+
+			if (xAxis > 0f && grounded) {
+				rb.velocity = new Vector2 (movementSpeed, rb.velocity.y);
+				if (transform.localScale.x < 0) transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+				
+			}
+
+			else if (xAxis < 0f && grounded) {
+				rb.velocity = new Vector2 (-1 * movementSpeed, rb.velocity.y);
+				if (transform.localScale.x > 0) transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+				
+			}
+
+			if (Input.GetKeyDown(KeyCode.Space) && !outOfAmmo && canShoot) {
+				Shoot();
+			}
+
+			if (Input.GetKeyDown(KeyCode.DownArrow)) {
+				anim.SetBool("duck", true);
+				ducking = true;
+				boxCollider.enabled = false;
+
+			}
+
+			if (Input.GetKeyUp(KeyCode.DownArrow)) {
+				anim.SetBool("duck", false);
+				ducking = false;
+				boxCollider.enabled = true;
+			}
+
+			anim.SetFloat("movement", Mathf.Abs(xAxis));
 		}
-
-		else if (xAxis < 0f && grounded) {
-			rb.velocity = new Vector2 (-1 * movementSpeed, rb.velocity.y);
-			if (transform.localScale.x > 0) transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-			
-		}
-
-		if (Input.GetKeyDown(KeyCode.Space) && !outOfAmmo && canShoot) {
-			Shoot();
-		}
-
-		if (Input.GetKeyDown(KeyCode.DownArrow)) {
-			anim.SetBool("duck", true);
-			ducking = true;
-			boxCollider.enabled = false;
-
-		}
-
-		if (Input.GetKeyUp(KeyCode.DownArrow)) {
-			anim.SetBool("duck", false);
-			ducking = false;
-			boxCollider.enabled = true;
-		}
-
-		anim.SetFloat("movement", Mathf.Abs(xAxis));
 	}
 
 	void Shoot () {
@@ -151,6 +154,7 @@ public class Character : MonoBehaviour {
 
 			if (health < 0) {
 				Die();
+
 			}
 
 			else {
@@ -169,6 +173,7 @@ public class Character : MonoBehaviour {
 		circleCollider.enabled = false;
 		boxCollider.enabled = false;
 		rb.velocity = new Vector2(transform.localScale.x * -1f, 4f);
+		dead = true;
 		// StartCoroutine("FlashInvincibility");
 		gm.CallGameOver();
 	

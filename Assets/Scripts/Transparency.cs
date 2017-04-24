@@ -46,7 +46,7 @@ public class Transparency : MonoBehaviour {
 
 			else if (goArray[i].GetComponent<TextMesh>() != null) {
 				TextMesh currGO = goArray[i].GetComponent<TextMesh>();
-				currGO.color = new Color(currGO.color.r, currGO.color.g, currGO.color.b, 0);
+				currGO.color = new Color(currGO.color.r, currGO.color.g, currGO.color.b, opacity);
 			}
 		}
 	}
@@ -109,6 +109,12 @@ public class Transparency : MonoBehaviour {
 		for (int i = 0; i < imageArray.Length; i++) {
 			imageArray[i].color = new Color (imageArray[i].color.r, imageArray[i].color.g, imageArray[i].color.b, 0);
 		}
+	}
+
+	public static void SetTransparent (Image img) {
+		// for (int i = 0; i < img.Length; i++) {
+			img.color = new Color (img.color.r, img.color.g, img.color.b, 0);
+		// }
 	}
 
 	public static void SetTransparent (List<GameObject> goArray) {
