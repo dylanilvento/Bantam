@@ -49,13 +49,13 @@ public class Character : MonoBehaviour {
 				grounded = false;
 			}
 
-			if (xAxis > 0f && grounded) {
+			if (xAxis > 0f && grounded && !ducking) {
 				rb.velocity = new Vector2 (movementSpeed, rb.velocity.y);
 				if (transform.localScale.x < 0) transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
 				
 			}
 
-			else if (xAxis < 0f && grounded) {
+			else if (xAxis < 0f && grounded && !ducking) {
 				rb.velocity = new Vector2 (-1 * movementSpeed, rb.velocity.y);
 				if (transform.localScale.x > 0) transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
 				

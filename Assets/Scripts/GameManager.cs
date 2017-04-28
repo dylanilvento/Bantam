@@ -47,14 +47,14 @@ public class GameManager : MonoBehaviour {
 		Transparency.SetOpacity(gameOverScreen, 1f);
 		GameStats.StartGameOver();
 		yield return new WaitForSeconds(2f);
-		SceneManager.LoadScene(5);
+		SceneManager.LoadScene(0);
 	}
 
 	IEnumerator CallWinScreen () {
 		Transparency.SetOpacity(winScreen, 1f);
 		GameStats.ConquerFort(fortNum);
 		yield return new WaitForSeconds(3f);
-		print("reload the overworld");
-		SceneManager.LoadScene(0);
+		// print("reload the overworld");
+		SceneManager.LoadScene(5);
 	}
 }

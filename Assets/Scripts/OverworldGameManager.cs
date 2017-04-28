@@ -44,7 +44,7 @@ public class OverworldGameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && wonGame) {
-			SceneManager.LoadScene(5);
+			SceneManager.LoadScene(0);
 			GameStats.StartGameOver();
 		}
 	}
