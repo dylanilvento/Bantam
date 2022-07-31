@@ -5,7 +5,11 @@ using UnityEngine;
 public class ShipControl : MonoBehaviour
 {
     Rigidbody2D rb;
+
+    [Range(0, 1)]
     public float rotationSpeed;
+
+    [Range(0, 1)]
     public float movementSpeed;
     public GameObject puff;
 
