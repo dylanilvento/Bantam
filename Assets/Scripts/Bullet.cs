@@ -20,10 +20,14 @@ public class Bullet : MonoBehaviour
         }
     }
 
-	// Update is called once per frame
-	void Update () {
-		transform.position = new Vector2(transform.position.x + 0.02f * modifier, transform.position.y);
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position = new Vector2(
+            transform.position.x + 0.002f * modifier,
+            transform.position.y
+        );
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
