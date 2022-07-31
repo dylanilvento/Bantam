@@ -33,7 +33,7 @@ public class ShipControl : MonoBehaviour
             if (random < 0.005f)
             {
                 GameObject spawnedPuff = Instantiate(puff, transform.position, Quaternion.identity);
-                spawnedPuff.GetComponent<Rigidbody2D>().velocity = gameObject.transform.up * -0.1f;
+                // spawnedPuff.GetComponent<Rigidbody2D>().velocity = gameObject.transform.up * -0.1f;
             }
         }
 
